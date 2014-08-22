@@ -1,7 +1,9 @@
 require 'airport'
-
+require 'weather_spec'
 
 describe Airport do
+
+	include_examples 'weather'
 	let(:airport_DUS) 	{ Airport.new }
 	# let(:congested_DUS)	{ Airport.new }
 	let(:lh_plane) { double :plane }
@@ -27,3 +29,17 @@ describe Airport do
 	end
 
 end
+
+# it "works" do
+#     object = Object.new
+#     object.stub(:foo) do |arg|
+#       if arg == :this
+#         "got this"
+#       elsif arg == :that
+#         "got that"
+#       end
+#     end
+    
+#     object.foo(:this).should eq("got this")
+#     object.foo(:that).should eq("got that")
+#   end
