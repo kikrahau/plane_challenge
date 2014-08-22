@@ -5,4 +5,7 @@ module Weather
 		possibilities[rand(possibilities.length)]
 	end
 
+	def storming?
+		conditions == :storming
+	end
 end
