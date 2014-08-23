@@ -1,20 +1,17 @@
 class Plane
 
+	attr_accessor :flying_status
+
 	def initialize
-		@flying = false
+		@flying_status = :landed
 	end
 
 	def flying?
-		@flying
+		@flying_status
 	end
 
-	def take_off
-		@flying = true
+	def take_off!
+		@flying_status = :flying
 		self
-	end
-
-	def status
-		return "flying" if @flying == true
-		return "landed" if @flying == false
 	end
 end 
