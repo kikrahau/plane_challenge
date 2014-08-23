@@ -3,13 +3,12 @@ require 'weather_spec'
 
 describe Airport do
 
-	let(:airport_DUS) 	{ Airport.new }
-	# let(:congested_DUS)	{ Airport.new }
+	let(:airport_DUS) 	{ Airport.new }	
 	let(:lh_plane) { double :plane }
 	let(:weather) { double :weather}
 
-	context 'taking off and landing at the airport' do
-
+	context 'taking off and landing on sunny days' do
+		before { allow(airport_DUS).to receive(:conditions).and_return(:sunny) }
 		it "should be able to park planes" do
 			expect(airport_DUS.planes).to eq []
 		end
@@ -19,9 +18,7 @@ describe Airport do
 			expect(airport_DUS.planes).to eq [lh_plane]
 		end
 
-		it "should be able to let planes take off" do
-			airport_DUS.land lh_plane
-			airport_DUS.take_off (lh_plane)
+		it "should be able to let planes take off" do			airport_DUS.take_off (lh_plane)
 			expect(airport_DUS.planes).to eq []
 		end
 
@@ -29,11 +26,19 @@ describe Airport do
 			airport_DUS.capacity.times {airport_DUS.land(lh_plane)}
 			expect(airport_DUS).to be_full
 		end
+	end
 
-		xit "should raise error if a plane tries to land and a storm is brewing" do
-			allow(airport_DUS).to receive(:storming?).and_return(true)
-			expect(airport_DUS.land plane). to raise_error
+	context 'on storming days' do
+
+		before {allow(airport_DUS).to receive(:conditions).and_return(:storming)}
+
+		it "should raise error if a plane tries to land and a storm is brewing" do
+			expect{(airport_DUS.land lh_plane)}. to raise_error("Can't land, storm is brewing!")
 		end
+		it "should raise error if a plane tries to take-off and it is storming" do
+			expect{(airport_DUS.take_off lh_plane)}. to raise_error("Can't take-off, storm is brewing!")
+		end
+
 
 	end
 

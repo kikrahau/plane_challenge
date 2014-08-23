@@ -21,16 +21,17 @@ class Airport
 	end
 
 	def land plane
-
+		raise "Can't land, storm is brewing!" if conditions == :storming
 		@planes << plane unless full?	
 	end
 
 	def take_off plane
+		raise "Can't take-off, storm is brewing!" if conditions == :storming
 		@planes.delete plane 
 	end
 
 	def full?
 		@planes.length == capacity
 	end
-	
+
 end
