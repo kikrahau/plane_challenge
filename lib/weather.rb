@@ -4,10 +4,6 @@ module Weather
 		Array.new.concat(sunny_days).concat(storming_days).sample
 	end
 
-	def storming?
-		conditions == :storming
-	end
-
 	def sunny_days
 		sun = []
 		80.times {sun  << :sunny}
@@ -19,4 +15,5 @@ module Weather
 		20.times {storm << :storming}
 		storm
 	end
+	
 end

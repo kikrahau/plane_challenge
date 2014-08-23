@@ -9,13 +9,8 @@ describe Weather do
 		expect([:sunny,:storming]).to include airport.conditions 
 	end
 
-	it "should be possible to storm" do
-		allow(airport).to receive(:conditions).and_return(:storming)
-		expect(airport).to be_storming
-	end
-
 	it "can only be sunny or storming" do
-		weather_a =[]
+		weather_a = []
 		100.times {weather_a << airport.conditions}
 		expect(weather_a.uniq.length).to eq 2
 	end
@@ -24,5 +19,6 @@ describe Weather do
 		expect(airport.sunny_days.length). to eq 80
 		expect(airport.storming_days.length). to eq 20
 	end
+
 end
 

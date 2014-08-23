@@ -1,32 +1,27 @@
-require 'weather'
+require './lib/weather'
+
 class Airport
 
 	include Weather
 
-	attr_accessor :planes
+	attr_accessor :planes, :capacity
 
-	DEFAULT_CAPACITY = 5
+	DEFAULT_CAPACITY = 10
 
 	def initialize
 		@planes = []
-		@capacity
-	end
-
-	def capacity
 		@capacity = DEFAULT_CAPACITY
 	end
 
-	def capacity=(value)
-		@capacity = value
-	end
-
-	def land plane
+	def allow_to_land plane
 		raise "Can't land, storm is brewing!" if conditions == :storming
+		plane.land!
 		@planes << plane unless full?	
 	end
 
-	def take_off plane
+	def allow_to_take_off plane
 		raise "Can't take-off, storm is brewing!" if conditions == :storming
+		plane.take_off!
 		@planes.delete plane 
 	end
 
