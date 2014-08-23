@@ -1,5 +1,6 @@
 require 'weather'
 class Airport
+
 	include Weather
 
 	attr_accessor :planes
@@ -20,6 +21,7 @@ class Airport
 	end
 
 	def land plane
+
 		@planes << plane unless full?	
 	end
 
@@ -30,4 +32,5 @@ class Airport
 	def full?
 		@planes.length == capacity
 	end
+	
 end
