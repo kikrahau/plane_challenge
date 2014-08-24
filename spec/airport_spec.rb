@@ -1,4 +1,5 @@
 require 'airport'
+require 'plane'
 require 'weather_spec'
 
 describe Airport do
@@ -8,9 +9,9 @@ describe Airport do
 	let(:weather) 		{ double :weather}
 
 	context 'taking off and landing on sunny days' do
-
+		#set weather conditions to sunny so airport and planes can operate properly 
 		before { allow(airport_DUS).to receive(:conditions).and_return(:sunny) }
-		
+
 		it "should be able to park planes" do
 			expect(airport_DUS.planes).to eq []
 		end
@@ -30,13 +31,14 @@ describe Airport do
 		it "should not allow a plane to land if the airport is full" do
 			allow(lh_plane).to receive(:land!).and_return(:landed)
 			airport_DUS.capacity.times {airport_DUS.allow_to_land(lh_plane)}
-			expect(airport_DUS).to be_full
+			expect{airport_DUS.allow_to_land(plane)}.to raise_error
 		end
 
 	end
 
 	context 'on storming days' do
 
+		#set conditions to storming 
 		before {allow(airport_DUS).to receive(:conditions).and_return(:storming)}
 
 		it "should raise error if a plane tries to land and a storm is brewing" do
@@ -51,16 +53,26 @@ describe Airport do
 
 end
 
-# it "works" do
-#     object = Object.new
-#     object.stub(:foo) do |arg|
-#       if arg == :this
-#         "got this"
-#       elsif arg == :that
-#         "got that"
-#       end
-#     end
-    
-#     object.foo(:this).should eq("got this")
-#     object.foo(:that).should eq("got that")
-#   end
+describe "The grand finale (last spec)" do
+
+  	let(:lh_plane) 		{ Plane.new }
+  	let(:airport_DUS) 	{ Airport.new }
+
+
+	# create some sunny weather for the Lufthansa fleet
+  	before {allow(airport_DUS).to receive(:conditions).and_return(:sunny)}
+  	
+  it 'all planes can land and all planes can take off' do
+  	#create a Lufthansa fleet in the size of the capacity of the Dusseldorf Airport
+ 	lufthansa_fleet = []
+	airport_DUS.capacity.times { lufthansa_fleet << lh_plane }
+
+	#land each plane and check the landed status
+  	lufthansa_fleet.each { |lh_plane| airport_DUS.allow_to_land(lh_plane) }
+  	lufthansa_fleet.each { |lh_plane| expect(lh_plane.flying_status).to eq :landed }
+  	#let each plane take off and check the flying status
+  	lufthansa_fleet.each { |lh_plane| airport_DUS.allow_to_take_off(lh_plane) }
+  	lufthansa_fleet.each { |lh_plane| expect(lh_plane.flying_status).to eq :flying }
+  	end
+
+end

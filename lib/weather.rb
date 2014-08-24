@@ -6,14 +6,14 @@ module Weather
 
 	def sunny_days
 		sun = []
-		80.times {sun  << :sunny}
+		90.times {sun  << :sunny}
 		sun
 	end
 
 	def storming_days
 		storm = []
-		20.times {storm << :storming}
+		10.times {storm << :storming}
 		storm
 	end
-	
+
 end

@@ -7,7 +7,7 @@ class Plane
 	end
 
 	def take_off!
-		@flying_status
+		@flying_status = :flying
 		self
 	end
 
