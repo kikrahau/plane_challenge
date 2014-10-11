@@ -12,14 +12,19 @@ describe Airport do
 		#set weather conditions to sunny so airport and planes can operate properly 
 		before { allow(airport_DUS).to receive(:conditions).and_return(:sunny) }
 
-		it "should be able to park planes" do
-			expect(airport_DUS.planes).to eq []
+		it "should have have no planes" do
+			expect(airport_DUS.planes).to be_empty
 		end
 
 		it "should be able to let planes land" do
 			allow(lh_plane).to receive(:land!).and_return(:landed)
 			airport_DUS.allow_to_land lh_plane
 			expect(airport_DUS.planes).to eq [lh_plane]
+		end
+
+		it "it should a plane when landing" do 
+			expect(lh_plane).to receive(:land!).and_return(:landed)
+			airport_DUS.allow_to_land lh_plane
 		end
 
 		it "should be able to let planes take off" do
